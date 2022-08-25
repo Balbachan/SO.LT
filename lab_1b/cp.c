@@ -10,18 +10,17 @@ Tiago Caspirro Cardoso (32165978)
 
 #include <stdio.h>
 
-int main(int argc, char *argv1[], char *argv2[]){
+int main(int argc, char *argv[]){
     char letras;
     FILE *fileptr1, *fileptr2;
 
-    if((fileptr1 = fopen(argv1[1], "r")) == NULL){ 
+    if((fileptr1 = fopen(argv[1], "r")) == NULL){ 
         printf("Arquivo não encontrado!");
         exit(1);
     }
-    else{
-        fileptr2 = fopen(argv2[1], "w");
-    }
-
+    
+    fileptr2 = fopen(argv[2], "w");
+    
     while(1){ 
         letras = fgetc(fileptr1);
         if(letras == EOF){
