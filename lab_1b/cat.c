@@ -14,9 +14,11 @@ int main(int argc, char *argv[]){
     char letras;
     FILE *fileptr;
 
-    if((fileptr = fopen(argv[1], "r")) == NULL){ 
+    fileptr = fopen(argv[1], "r");
+
+    if(fileptr == NULL || argc != 2){ 
         printf("Arquivo não encontrado!");
-        exit(1);
+        return 0;
     }
 
     while(1){ 
@@ -24,7 +26,7 @@ int main(int argc, char *argv[]){
         if(letras == EOF){
             break;
         }
-        printf("\n%c", letras);
+        printf("%c", letras);
     }
     fclose(fileptr);
     return 0;

@@ -13,20 +13,17 @@ Tiago Caspirro Cardoso (32165978)
 int main(int argc, char *argv[]){
     char letras;
     FILE *fileptr1, *fileptr2;
-
-    if((fileptr1 = fopen(argv[1], "r")) == NULL){ 
-        printf("\nArquivo %s não encontrado!", argv[1]);
-        exit(1);
-    }
     
-    if((fileptr2 = fopen(argv[2], "r+")) != NULL){
-        printf("\nNão foi possível criar o arquivo %s.", argv[2]);
-        exit(1);
+    fileptr1 = fopen(argv[1], "r");
+    fileptr2 = fopen(argv[2],"w");
+    
+    if(fileptr1 == NULL || argc != 3){ 
+        printf("\nArquivo %s não encontrado!", argv[1]);
+        return 0;
     }
     else{
         printf("\nArquivo %s criado com sucesso!", argv[2]);
     }
-    
     
     while(1){ 
         letras = fgetc(fileptr1);
