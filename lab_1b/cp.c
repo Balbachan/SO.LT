@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
     while(1){ 
         letras = fgetc(fileptr1);
         if(letras != EOF){
-            fprintf(fileptr2, letras);
+            putc(letras, fileptr2);
         }
         else{ 
             break;
