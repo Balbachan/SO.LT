@@ -1,6 +1,6 @@
 /*
 Sistemas Operacionais 
-Laboratório 2 - Execício 1
+Laboratório 1b - Execício 1
 
 Alunos:
 Laura Carolina Balbachan dos Santos (32173008)
