@@ -15,8 +15,7 @@ Apesar das ID's dos processos respeitarem a lógica que as cabe maioria das veze
 sendo essao processo-pai ser a ID decrementada do processo correspondente e 
 o processo-filho a ID incrementada do processo, há duas exceções:
 1. O processo-pai, às vezes, resulta em 9 ou 10;
-2. O último processo tem como ID do processo-filho 0.
+2. O último processo tem como zero a ID do processo-filho.
 
 Execício 2) 
-A mudança observada foi que nos três últimos processos. Basicamente, o último processo
-é impresso "duas linhas" anterior à posição correta, mesmo que com as ID's coerentes.
+Nenhuma mudança de saída foi observada entre a chamada sys.stdout e sys.stderr.
