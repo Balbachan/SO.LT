@@ -18,4 +18,4 @@ o processo-filho a ID incrementada do processo, há duas exceções:
 2. O último processo tem como zero a ID do processo-filho.
 
 Execício 2) 
-Nenhuma mudança de saída foi observada entre a chamada sys.stdout e sys.stderr.
+Nenhuma mudança de saída foi observada entre a chamada sys.stdout e sys.stderr. Ao usar o sys.stderr, por não se tratar de um erro, imprimiu os resultados normalmente.
