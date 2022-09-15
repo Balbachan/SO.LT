@@ -27,10 +27,11 @@ Tiago Caspirro Cardoso (32165978)
 int filo_estado[TOTAL];                  //estado de cada filósofo
 int filo_id[TOTAL] = {0, 1, 2, 3, 4};    // ID de cada filósofo
 sem_t S[TOTAL];                          // utilização de semáforos para representar os talheres
-sem_t semaforo; 
+sem_t semaforo;                          // utilização de semáforos para representar filósofos
 
 // PROTOTIPAÇÃO 
 void * filosofo(void *num);  // "estrutura" das ações do filósofo
+void testar_vizinhos (int);  // checa se os vizinhos estão comento 
 void pegar_garfo(int);       // ação de pegar os talheres 
 void devolver_garfo(int);    // ação de devolver os talheres 
 
@@ -38,7 +39,8 @@ void devolver_garfo(int);    // ação de devolver os talheres
 
 void testar_vizinhos(int filo_num){
     if(filo_estado[filo_num] == FAMINTO && filo_estado[ESQUERDA] != COMENDO && filo_estado[DIREITA] != COMENDO){
-        filo_estado[filo_num] = COMENDO;
+         
+        filo_estado[filo_num] = COMENDO;  // define o estado do filósofo como "comendo"
             
         sem_wait(&S[filo_num]);  // tenta pegar o garfo que está na mesma posição 
         printf("O filósofo %d pegou o garfo %d.\n", filo_num, filo_num);
@@ -49,30 +51,31 @@ void testar_vizinhos(int filo_num){
         printf("O filósofo %d pegou o garfo %d\n.", filo_num,(filo_num + 1) % TOTAL);
         printf("O filósofo %d está comendo.\n", filo_num); // pegou os talheres, consegue comer
         
-        sem_post(&S[filo_num]); 
+        sem_post(&S[filo_num]);  // volta para o estado original
     }
 }
 
 
 void pegar_garfo(int filo_num){
-    sem_wait(&semaforo);
-    filo_estado[filo_num] == FAMINTO;
+    sem_wait(&semaforo);  // 
+
+    filo_estado[filo_num] == FAMINTO; // define o estado do filósofo como "faminto"
     printf("O filósofo %d está com fome.\n", filo_num); // o filósofo começa com fome
     
     sleep(1);  // pausa de 1 segundo
     
-    testar_vizinhos(filo_num);
+    testar_vizinhos(filo_num);  // checa se os vizinhos não estão comendo 
     
-    sem_post(&semaforo);
+    sem_post(&semaforo);  // volta para o estado original
     
-    sem_wait(&S[filo_num]);
+    sem_wait(&S[filo_num]);  // caso não dê para comer, espera
     
     sleep(1);  // pausa de 1 segundo
 }
 
 
 void devolver_garfo(int filo_num){
-    sem_wait(&semaforo);
+    sem_wait(&semaforo);  // 
     
     sem_post(&S[filo_num]);  // sinaliza que vai devolver o garfo que estava na mesma posição
     printf("O filósofo %d devolveu o garfo %d.\n", filo_num, filo_num);
@@ -83,10 +86,10 @@ void devolver_garfo(int filo_num){
     filo_estado[filo_num] = PENSANDO;
     printf("O filósofo %d está pensando.\n", filo_num); // filósofo volta a pensar 
     
-    testar_vizinhos(ESQUERDA);
-    testar_vizinhos(DIREITA);
+    testar_vizinhos(ESQUERDA);  // testa o vizinho da esquerda
+    testar_vizinhos(DIREITA);   // testa o vizinho da direita
     
-    sem_post(&semaforo);
+    sem_post(&semaforo);  // volta para o estado original
 }
 
 
@@ -103,11 +106,11 @@ void * filosofo(void *num){
 
 int main(){
     int i;
-    pthread_t thread_id[TOTAL];  //  
+    pthread_t thread_id[TOTAL];  // permite identificar threads 
     
-    sem_init(&semaforo, 0, 1);
+    sem_init(&semaforo, 0, 1);   // inicialização do semáforo semaforo
     
-    for(i = 0; i < TOTAL; i++)  // inicialização do semáforo
+    for(i = 0; i < TOTAL; i++)   // inicialização do semáforo S
         sem_init(&S[i], 0, 1);
 
     for(i = 0; i < TOTAL; i++){  // inicia as threads 
