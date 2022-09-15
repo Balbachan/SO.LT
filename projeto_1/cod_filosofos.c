@@ -6,6 +6,12 @@ Alunos:
 Laura C. Balbachan dos Santos (32173008)
 Tiago Caspirro Cardoso (32165978)
 
+--------------------------------------------------------------------------------------------------
+b. Explique, em cada trecho do seu programa, como é resolvido o problema da comunicação inter processos (IPC).
+   De maneira categórica, o problema da comunicação inter processos é resolvida através da utilização dos 
+   semáforos, que através da operação "wait()" e "post()" garante, respectivamente, que o filósofo tenha que 
+   esperar a sua vez de pegar os talheres e, depois de comer, colocá-los de volta na mesa.
+
 */ 
 
 #include <pthread.h>
