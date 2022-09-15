@@ -24,7 +24,7 @@ b. Explique, em cada trecho do seu programa, como é resolvido o problema da com
 
 #define COMENDO  0  // identificação do estado "comendo"
 #define FAMINTO  1  // identificação do estado de fome
-#define PENSANDO 2 // identificação do estado pensativo
+#define PENSANDO 2  // identificação do estado pensativo
  
 #define DIREITA (filo_num + 1) % TOTAL   // encontra o filósofo à direita  
 #define ESQUERDA (filo_num + 4) % TOTAL  // encontra o filósofo à esquerda
@@ -63,7 +63,7 @@ void testar_vizinhos(int filo_num){
 
 
 void pegar_garfo(int filo_num){
-    sem_wait(&semaforo);  // aplica o processo do semaforo atravez do proceço de decrementar
+    sem_wait(&semaforo);  // filósofo solicita o garfo
 
     filo_estado[filo_num] == FAMINTO; // define o estado do filósofo como "faminto"
     printf("O filósofo %d está com fome.\n", filo_num); // o filósofo começa com fome
@@ -72,7 +72,7 @@ void pegar_garfo(int filo_num){
     
     testar_vizinhos(filo_num);  // checa se os vizinhos não estão comendo 
     
-    sem_post(&semaforo);  // aplica o processo do semaforo atravez do proceço de encrementar
+    sem_post(&semaforo);  // solicitação do filósofo termina
     
     sem_wait(&S[filo_num]);  // caso não dê para comer, espera
     
@@ -81,9 +81,9 @@ void pegar_garfo(int filo_num){
 
 
 void devolver_garfo(int filo_num){
-    sem_wait(&semaforo);  // aplica o processo do semaforo atravez do proceço de decrementar
+    sem_wait(&semaforo);  // filósofo solicita o garfo
     
-    sem_post(&S[filo_num]);  // sinaliza que vai devolver o garfo que estava na mesma posição
+    sem_post(&S[filo_num]);  // sinaliza que vai devolver o garfo
     printf("O filósofo %d devolveu o garfo %d.\n", filo_num, filo_num);
     sem_post (&S[(filo_num + 1) % TOTAL]); // devolve o segundo garfo
     printf("O filósofo %d devolveu o garfo %d.\n", filo_num,(filo_num + 1) % TOTAL);
@@ -95,7 +95,7 @@ void devolver_garfo(int filo_num){
     testar_vizinhos(ESQUERDA);  // testa o vizinho da esquerda
     testar_vizinhos(DIREITA);   // testa o vizinho da direita
     
-    sem_post(&semaforo);  // aplica o processo do semaforo atravez do proceço de encrementar
+    sem_post(&semaforo);  // solicitação do filósofo termina
 }
 
 
