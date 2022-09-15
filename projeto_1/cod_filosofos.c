@@ -37,6 +37,35 @@ void devolver_garfo(int);    // ação de devolver os talheres
 
 // ----------------------------------------------------------------------------------------------
 
+int main(){
+    int i;
+    pthread_t thread_id[TOTAL];  // permite identificar threads 
+    
+    sem_init(&semaforo, 0, 1);   // inicialização do semáforo semaforo
+    
+    for(i = 0; i < TOTAL; i++)   // inicialização do semáforo S
+        sem_init(&S[i], 0, 1);
+
+    for(i = 0; i < TOTAL; i++){  // inicia as threads 
+        pthread_create(&thread_id[i], NULL, filosofo, &filo_id[i]); 
+    }
+
+    for(i = 0; i < TOTAL; i++)  // suspende a execução das threads
+        pthread_join(thread_id[i], NULL);
+
+}
+
+// neste problema, todo filósofo é "composto" por 5 fases: estar com fome, pegar os talheres,
+// comer, devolver os talheres e pensar. 
+void * filosofo(void *num){
+    while(1){
+        int *i = num;
+        pegar_garfo(*i);     // aqui ele está com fome, pega os talheres e come
+        devolver_garfo(*i);  // aqui ele devolve os talheres e volta a pensar
+    }
+}
+
+
 void testar_vizinhos(int filo_num){
     if(filo_estado[filo_num] == FAMINTO && filo_estado[ESQUERDA] != COMENDO && filo_estado[DIREITA] != COMENDO){
          
@@ -92,32 +121,3 @@ void devolver_garfo(int filo_num){
     sem_post(&semaforo);  // volta para o estado original
 }
 
-
-// neste problema, todo filósofo é "composto" por 5 fases: estar com fome, pegar os talheres,
-// comer, devolver os talheres e pensar. 
-void * filosofo(void *num){
-    while(1){
-        int *i = num;
-        pegar_garfo(*i);     // aqui ele está com fome, pega os talheres e come
-        devolver_garfo(*i);  // aqui ele devolve os talheres e volta a pensar
-    }
-}
-
-
-int main(){
-    int i;
-    pthread_t thread_id[TOTAL];  // permite identificar threads 
-    
-    sem_init(&semaforo, 0, 1);   // inicialização do semáforo semaforo
-    
-    for(i = 0; i < TOTAL; i++)   // inicialização do semáforo S
-        sem_init(&S[i], 0, 1);
-
-    for(i = 0; i < TOTAL; i++){  // inicia as threads 
-        pthread_create(&thread_id[i], NULL, filosofo, &filo_id[i]); 
-    }
-
-    for(i = 0; i < TOTAL; i++)  // suspende a execução das threads
-        pthread_join(thread_id[i], NULL);
-
-}
