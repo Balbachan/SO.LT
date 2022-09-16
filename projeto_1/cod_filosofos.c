@@ -27,7 +27,7 @@ b. Explique, em cada trecho do seu programa, como é resolvido o problema da com
 #define PENSANDO 2  // identificação do estado pensativo
  
 #define DIREITA (filo_num + 1) % TOTAL   // encontra o filósofo à direita  
-#define ESQUERDA (filo_num + 4) % TOTAL  // encontra o filósofo à esquerda
+#define ESQUERDA filo_num % TOTAL  // encontra o filósofo à esquerda
 
 // VARIÁVEIS 
 int filo_estado[TOTAL];                  //estado de cada filósofo
@@ -45,19 +45,19 @@ void devolver_garfo(int);    // ação de devolver os talheres
 
 void testar_vizinhos(int filo_num){
     if(filo_estado[filo_num] == FAMINTO && filo_estado[ESQUERDA] != COMENDO && filo_estado[DIREITA] != COMENDO){
-         
         filo_estado[filo_num] = COMENDO;  // define o estado do filósofo como "comendo"
             
-        sem_wait(&S[filo_num]);  // tenta pegar o garfo que está na mesma posição 
+        sem_trywait(&S[filo_num]);  // tenta pegar o garfo que está na mesma posição 
         printf("O filósofo %d pegou o garfo %d.\n", filo_num, filo_num);
 
         sleep(1);  // pausa de 1 segundo
 
-        sem_wait (&S[(filo_num + 1) % TOTAL]);  // tenta pegar o garfo à sua direita 
+        sem_trywait(&S[DIREITA]); // tenta pegar o garfo à sua direita 
         printf("O filósofo %d pegou o garfo %d\n.", filo_num,(filo_num + 1) % TOTAL);
         printf("O filósofo %d está comendo.\n", filo_num); // pegou os talheres, consegue comer
         
         sem_post(&S[filo_num]);  // volta para o estado original
+
     }
 }
 
@@ -65,7 +65,7 @@ void testar_vizinhos(int filo_num){
 void pegar_garfo(int filo_num){
     sem_wait(&semaforo);  // filósofo solicita o garfo
 
-    filo_estado[filo_num] == FAMINTO; // define o estado do filósofo como "faminto"
+    filo_estado[filo_num] = FAMINTO; // define o estado do filósofo como "faminto"
     printf("O filósofo %d está com fome.\n", filo_num); // o filósofo começa com fome
     
     sleep(1);  // pausa de 1 segundo
