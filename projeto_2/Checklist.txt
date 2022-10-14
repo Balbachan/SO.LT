@@ -1,0 +1,11 @@
+Checklist:
+  
+  Alocação Dinâmica:
+  - https://www.ime.usp.br/~pf/algoritmos/aulas/aloca.html
+  
+  Struct:
+  - https://blog.betrybe.com/linguagem-de-programacao/struct-em-c/
+  
+  Bibliotecas:
+  - https://www.ime.usp.br/~pf/algoritmos/apend/stdlib.h.html
+  
