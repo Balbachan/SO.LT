@@ -33,8 +33,6 @@ void transfValor(int valor, Conta& de, Conta& para) {
     mtx.unlock();
 };
 
-// Criar função de adicionar fundos em uma conta (alterar o 100 inicial)
-
 int main() { 
     Conta contaDe;
     Conta contaPara; 
