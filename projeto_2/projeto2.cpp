@@ -11,13 +11,17 @@ Alunos:
 
 #include <iostream>
 #include <thread>
+#include <mutex>
 using namespace std;
+
+mutex mtx; 
 
 struct Conta {
     int valorConta{100}; 
 };
 
 void transfValor(int valor, Conta& de, Conta& para) {
+    mtx.lock();
     if(de.valorConta >= valor) {  
         cout << "Transferencia realizada com sucesso.\n";
         de.valorConta -= valor;
@@ -26,6 +30,7 @@ void transfValor(int valor, Conta& de, Conta& para) {
     else {
         cout << "Não é possível realizar essa transferencia.\n";
     }
+    mtx.unlock();
 };
 
 // Criar função de adicionar fundos em uma conta (alterar o 100 inicial)
@@ -42,6 +47,8 @@ int main() {
 
     cout << "Total conta De: " << contaDe.valorConta << endl;
     cout << "Total conta Para: " << contaPara.valorConta << endl;
+
+    return 0;
 }
 
      
